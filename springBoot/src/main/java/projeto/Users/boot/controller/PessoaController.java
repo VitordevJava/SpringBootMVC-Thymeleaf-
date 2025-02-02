@@ -53,18 +53,18 @@ public class PessoaController {
 
 	@GetMapping("/editarpessoa/{idpessoa}")
 	public ModelAndView editar(@PathVariable("idpessoa") Long idpessoa) { 
-	    Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa); // Busca a pessoa pelo ID no banco de dados
-	    ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); // Define a view de cadastro
-	    modelAndView.addObject("pessoaobj", pessoa.get()); // Adiciona a pessoa encontrada à view
-	    return modelAndView; // Retorna a view com os dados da pessoa
+	    Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa); /*Busca a pessoa pelo ID no banco de dados */
+	    ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); /* Define a view de cadastro */
+	    modelAndView.addObject("pessoaobj", pessoa.get()); /* Adiciona a pessoa encontrada à view */
+	    return modelAndView; /* Retorna a view com os dados da pessoa */
 	}
 
 	@GetMapping("/removerpessoa/{idpessoa}")
 	public ModelAndView remover(@PathVariable("idpessoa") Long idpessoa) { 
-	    pessoaRepository.deleteById(idpessoa); // Remove a pessoa pelo ID do banco de dados
-	    ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); // Define a view de cadastro
-	    modelAndView.addObject("pessoas", pessoaRepository.findAll()); // Adiciona a lista atualizada de pessoas à view
-	    modelAndView.addObject("pessoaobj", new Pessoa()); // Adiciona um novo objeto Pessoa vazio à view
-	    return modelAndView; // Retorna a view com a lista atualizada e um novo objeto Pessoa
+	    pessoaRepository.deleteById(idpessoa); /* Remove a pessoa pelo ID do banco de dados */
+	    ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); /* Define a view de cadastro */
+	    modelAndView.addObject("pessoas", pessoaRepository.findAll()); /* Adiciona a lista atualizada de pessoas à view */
+	    modelAndView.addObject("pessoaobj", new Pessoa()); /* Adiciona um novo objeto Pessoa vazio à view */
+	    return modelAndView; /* Retorna a view com a lista atualizada e um novo objeto Pessoa */
 	}
 }

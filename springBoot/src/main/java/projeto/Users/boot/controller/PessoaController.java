@@ -38,6 +38,7 @@ public class PessoaController {
         modelAndView.addObject("pessoas", pessoaRepository.findAll()); /*Atualiza a lista de pessoas*/
         modelAndView.addObject("pessoaobj", new Pessoa());  
         return modelAndView;
+        
     }
 
 	

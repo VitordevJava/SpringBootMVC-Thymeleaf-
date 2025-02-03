@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>INSIRA SEUS DADOS</title>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
       <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
@@ -22,7 +22,21 @@
 		<input class="waves-effect waves-light btn-large" type="submit" value="Salvar">
 	</form>
 	
+	<br>
+	<br>
+	
 	<a href="/listapessoas">Lista Pessoas</a>
+	<br>
+	<br>
+	
+	<br>
+	<br>
+	
+	 <form th:action="@{/pesquisarpessoa}" method="post">
+	<label>Pesquisar Nome: </label>
+	<input name="nomepesquisa">
+	<input class="waves-effect waves-light btn-large" type="submit" value ="Pesquisar">
+	</form>
 	
 <table>
   <tr th:each="pessoa : ${pessoas}">

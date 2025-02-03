@@ -26,6 +26,8 @@ public class PessoaController {
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+        modelAndView.addObject("pessoas", pessoaRepository.findAll()); /*Atualiza a lista de pessoas*/
+        modelAndView.addObject("pessoaobj", new Pessoa());  
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 	}
@@ -79,5 +81,12 @@ public class PessoaController {
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 	}
-	
+	@GetMapping("/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) { 
+	    Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa); /*Busca a pessoa pelo ID no banco de dados */
+	    
+	    ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); /* Define a view de cadastro */
+	    modelAndView.addObject("pessoaobj", pessoa.get()); /* Adiciona a pessoa encontrada à view */
+	    return modelAndView; /* Retorna a view com os dados da pessoa */
+	}
 }

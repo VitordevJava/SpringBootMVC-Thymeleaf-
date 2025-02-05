@@ -15,14 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import projeto.Users.boot.model.Pessoa;
+import projeto.Users.boot.model.Telefone;
 import projeto.Users.boot.repository.PessoaRepository;
+import projeto.Users.boot.repository.TelefoneRepository;
 
 @Controller
 public class PessoaController {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired 
+	private TelefoneRepository telefoneRepository;
 
+	
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
@@ -32,7 +38,7 @@ public class PessoaController {
 		return modelAndView;
 	}
 	
-	@PostMapping("/salvarpessoa")  /*Mudança no metodo otimizando a sixtaxe, e usando direto a anotação de @PostMapping*/
+	@PostMapping("*/salvarpessoa")  /*Mudança no metodo otimizando a sixtaxe, e usando direto a anotação de @PostMapping*/
     public ModelAndView salvar(Pessoa pessoa) {
         pessoaRepository.save(pessoa); 
 
@@ -54,13 +60,16 @@ public class PessoaController {
 	}
 
 	@GetMapping("/editarpessoa/{idpessoa}")
-	public ModelAndView editar(@PathVariable("idpessoa") Long idpessoa) { 
-	    Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa); /*Busca a pessoa pelo ID no banco de dados */
-	    ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa"); /* Define a view de cadastro */
-	    modelAndView.addObject("pessoaobj", pessoa.get()); /* Adiciona a pessoa encontrada à view */
-	    return modelAndView; /* Retorna a view com os dados da pessoa */
+	public ModelAndView editar(@PathVariable("idpessoa") Long idpessoa) {
+	    Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
+	    if (pessoa.isPresent()) {
+	        ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+	        modelAndView.addObject("pessoaobj", pessoa.get());
+	        return modelAndView;
+	    } else {
+	        return new ModelAndView("redirect:/listapessoas");
+	    }
 	}
-
 	@GetMapping("/removerpessoa/{idpessoa}")
 	public ModelAndView remover(@PathVariable("idpessoa") Long idpessoa) { 
 	    pessoaRepository.deleteById(idpessoa); /* Remove a pessoa pelo ID do banco de dados */
@@ -82,11 +91,23 @@ public class PessoaController {
 		return modelAndView;
 	}
 	@GetMapping("/telefones/{idpessoa}")
-	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) { 
+	public ModelAndView telefone(@PathVariable("idpessoa") Long idpessoa) { 
 	    Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa); /*Busca a pessoa pelo ID no banco de dados */
 	    
 	    ModelAndView modelAndView = new ModelAndView("cadastro/telefones"); /* Define a view de cadastro */
 	    modelAndView.addObject("pessoaobj", pessoa.get()); /* Adiciona a pessoa encontrada à view */
 	    return modelAndView; /* Retorna a view com os dados da pessoa */
+	}
+	
+	@PostMapping("/addfonePessoa/{pessoaid}")
+	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
+		
+		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
+		telefone.setPessoa(pessoa);
+		telefoneRepository.save(telefone);
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("pessoaobj", pessoa);
+		return modelAndView;
 	}
 }

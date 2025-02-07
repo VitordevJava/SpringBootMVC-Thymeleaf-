@@ -1,11 +1,15 @@
 package projeto.Users.boot.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.validation.Valid;
 import projeto.Users.boot.model.Pessoa;
 import projeto.Users.boot.model.Telefone;
 import projeto.Users.boot.repository.PessoaRepository;
@@ -38,8 +43,21 @@ public class PessoaController {
 		return modelAndView;
 	}
 	
-	@PostMapping("*/salvarpessoa")  /*Mudança no metodo otimizando a sixtaxe, e usando direto a anotação de @PostMapping*/
-    public ModelAndView salvar(Pessoa pessoa) {
+	@PostMapping("/salvarpessoa")  /*Mudança no metodo otimizando a sixtaxe, e usando direto a anotação de @PostMapping*/
+    public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+			modelAndView.addObject("pessoas", pessoaRepository.findAll()); /*Atualiza a lista de pessoas*/
+	        modelAndView.addObject("pessoaobj", pessoa);  
+	        
+	        List<String> msg = new ArrayList<String>();
+	        for(ObjectError objectError : bindingResult.getAllErrors()) {
+	        	msg.add(objectError.getDefaultMessage());
+	        }
+	        modelAndView.addObject("msg", msg);
+	        return modelAndView;
+		}
         pessoaRepository.save(pessoa); 
 
         ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");

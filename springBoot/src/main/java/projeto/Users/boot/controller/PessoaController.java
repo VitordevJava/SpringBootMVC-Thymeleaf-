@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -123,6 +124,29 @@ public class PessoaController {
 	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
 		
 		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
+		
+		/*Validação do Numero*/
+		if(telefone != null && telefone.getNumero().isEmpty() 
+				
+				|| telefone.getTipo().isEmpty()) {
+			
+			
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+			List<String> msg = new ArrayList<String>();
+			
+			if(telefone.getNumero().isEmpty()) {
+			msg.add("Número deve ser Informado");
+			}
+			
+			if(telefone.getTipo().isEmpty()) {			
+				msg.add("Tipo deve ser informado");
+			}
+			modelAndView.addObject("msg", msg);
+			return modelAndView;
+		}
+		
 		telefone.setPessoa(pessoa);
 		telefoneRepository.save(telefone);
 		

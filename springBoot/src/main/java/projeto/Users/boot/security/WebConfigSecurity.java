@@ -24,6 +24,7 @@ public class WebConfigSecurity {
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/materialize/**", "/login").permitAll()
+                .requestMatchers("/", "/materialize/**", "/cadastropessoa").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login

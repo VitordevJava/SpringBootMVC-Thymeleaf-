@@ -13,6 +13,6 @@ public class IndexController {
 	
 	@RequestMapping("/login")
 	public String login() {
-		return "/Auth/login";
+		return "Auth/login";
 	}
 }

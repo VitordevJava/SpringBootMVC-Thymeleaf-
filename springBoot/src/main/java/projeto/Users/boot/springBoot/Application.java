@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan (basePackages = {"projeto.*"})
 @EnableJpaRepositories (basePackages ={"projeto.Users.boot.repository"})
 @EnableTransactionManagement
+
 public class Application {
 
 	public static void main(String[] args) {

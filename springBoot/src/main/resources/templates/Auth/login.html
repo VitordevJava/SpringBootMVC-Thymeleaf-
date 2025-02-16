@@ -1,18 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Importando o Materialize CSS a partir da pasta static -->
+    <link rel="stylesheet" th:href="@{/materialize/css/materialize.min.css}">
+    <!-- Outras folhas de estilo personalizadas (se houver) -->
 </head>
 <body>
-    <h1>Login</h1>
-    <form th:action="@{/login}" method="post">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" required>
-        <br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Entrar</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m6 offset-m3">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Login</span>
+                        <form th:action="@{/login}" method="post">
+                            <div class="input-field">
+                                <input type="text" id="username" name="username" required>
+                                <label for="username">Usuário</label>
+                            </div>
+                            <div class="input-field">
+                                <input type="password" id="password" name="password" required>
+                                <label for="password">Senha</label>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit">Entrar</button>
+                        </form>
+                    </div>
+                    <div class="card-action">
+                        <a th:href="@{/cadastropessoa}">Criar uma conta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Importando o Materialize JS a partir da pasta static -->
+    <script th:src="@{/materialize/js/materialize.min.js}"></script>
+    <!-- Scripts personalizados (opcional) -->
+    <script th:src="@{/js/scripts.js}"></script>
 </body>
 </html>

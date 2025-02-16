@@ -23,8 +23,8 @@ public class WebConfigSecurity {
         http
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/materialize/**", "/login").permitAll()
-                .requestMatchers("/", "/materialize/**", "/cadastropessoa").hasAnyRole("ADMIN")
+                .requestMatchers("/", "/login", "/materialize/**", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/materialize/**", "/cadastropessoa").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login

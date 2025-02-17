@@ -31,7 +31,7 @@ public class WebConfigSecurity {
             )
             .formLogin(login -> login
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/cadastropessoa", true)
                 .permitAll()
             )
             .logout(logout -> logout

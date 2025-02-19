@@ -47,6 +47,8 @@ public class PessoaController {
 	@PostMapping("/salvarpessoa")  /*Mudança no metodo otimizando a sixtaxe, e usando direto a anotação de @PostMapping*/
     public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 		
+		pessoaRepository.save(pessoa);
+		
 		if(bindingResult.hasErrors()) {
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 			modelAndView.addObject("pessoas", pessoaRepository.findAll()); /*Atualiza a lista de pessoas*/

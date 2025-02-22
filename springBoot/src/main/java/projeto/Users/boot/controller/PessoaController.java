@@ -40,7 +40,7 @@ public class PessoaController {
         return modelAndView;
     }
 
-    /* Endpoint para salvar uma nova pessoa (criação) */
+    // Endpoint para salvar uma nova pessoa (criação)
     @PostMapping("/salvarpessoa")
     public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -56,7 +56,7 @@ public class PessoaController {
             return modelAndView;
         }
 
-        // Garante que é uma criação (ID nulo)
+       
         if (pessoa.getId() != null && pessoaRepository.existsById(pessoa.getId())) {
             // Se o ID já existe, redireciona para evitar sobrescrever por engano
             ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");

@@ -24,6 +24,16 @@ public class Pessoa implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	
 	
+	private String sexopessoa;
+	
+	public String getSexopessoa() {
+		return sexopessoa;
+	}
+
+	public void setSexopessoa(String sexopessoa) {
+		this.sexopessoa = sexopessoa;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

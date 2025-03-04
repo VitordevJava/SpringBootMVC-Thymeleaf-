@@ -35,7 +35,17 @@
                     <label>Sobrenome</label> 
                     <input placeholder="Informe o Sobrenome da Pessoa" name="sobrenome" th:field="*{sobrenome}">
                 </div>
-                <div class="input field col s6">
+                
+				<div class="input field col s6">
+					<label for="sexopessoa" class="active">SEXO</label> 
+					<select class="browser-default" th:field="*{sexopessoa}">
+						<option value="" disabled selected>[Selecione]</option>
+						<option value="MASCULINO" th:text="Masculino" />
+						<option value="FEMININO" th:text="Feminino" />
+					</select>
+				</div>
+				
+				<div class="input field col s6">
                     <label>Idade</label> 
                     <input placeholder="Informe a idade"name="idade" th:field="*{idade}">
                 </div>

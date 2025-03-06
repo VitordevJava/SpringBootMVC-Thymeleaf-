@@ -74,7 +74,8 @@ public class PessoaController {
         return modelAndView;
     }
 
-    // Novo endpoint para editar uma pessoa existente
+    /*Metodo de edição, simplificação do codigo de atualização, 
+     * (SE HOUVER ID SERÁ REDIRECIONADO PARA ESSE METODO, a validação é feita no /salvar usuario)*/
     @PostMapping("/atualizarpessoa")
     public ModelAndView atualizar(@Valid Pessoa pessoa, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -90,7 +91,7 @@ public class PessoaController {
             return modelAndView;
         }
 
-        // Verifica se a pessoa existe antes de atualizar
+        /* Verifica se a pessoa existe antes de atualizar */
         if (pessoa.getId() == null || !pessoaRepository.existsById(pessoa.getId())) {
             ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
             modelAndView.addObject("pessoas", pessoaRepository.findAll());
@@ -99,7 +100,7 @@ public class PessoaController {
             return modelAndView;
         }
 
-        pessoaRepository.save(pessoa); // Atualiza a pessoa existente
+        pessoaRepository.save(pessoa); /* Atualiza a pessoa existente */
 
         ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
         modelAndView.addObject("pessoas", pessoaRepository.findAll());

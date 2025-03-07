@@ -43,37 +43,28 @@ public class PessoaController {
     // Endpoint para salvar uma nova pessoa (criação)
     @PostMapping("/salvarpessoa")
     public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+        modelAndView.addObject("pessoas", pessoaRepository.findAll());
+        
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-            modelAndView.addObject("pessoas", pessoaRepository.findAll());
             modelAndView.addObject("pessoaobj", pessoa);
-
-            List<String> msg = new ArrayList<>();
-            for (ObjectError objectError : bindingResult.getAllErrors()) {
-                msg.add(objectError.getDefaultMessage());
-            }
-            modelAndView.addObject("msg", msg);
+            modelAndView.addObject("msg", bindingResult.getAllErrors()
+                .stream()
+                .map(ObjectError::getDefaultMessage)
+                .toList());
             return modelAndView;
         }
 
-       
         if (pessoa.getId() != null && pessoaRepository.existsById(pessoa.getId())) {
-            // Se o ID já existe, redireciona para evitar sobrescrever por engano
-            ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-            modelAndView.addObject("pessoas", pessoaRepository.findAll());
             modelAndView.addObject("pessoaobj", pessoa);
             modelAndView.addObject("msg", List.of("Pessoa já existe. Use a opção de edição."));
             return modelAndView;
         }
 
         pessoaRepository.save(pessoa);
-
-        ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-        modelAndView.addObject("pessoas", pessoaRepository.findAll());
         modelAndView.addObject("pessoaobj", new Pessoa());
         return modelAndView;
     }
-
     /*Metodo de edição, simplificação do codigo de atualização, 
      * (SE HOUVER ID SERÁ REDIRECIONADO PARA ESSE METODO, a validação é feita no /salvar usuario)*/
     @PostMapping("/atualizarpessoa")

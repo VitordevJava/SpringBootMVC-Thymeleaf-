@@ -1,0 +1,110 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="pessoa" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1d973527-7e5c-468b-8e88-c8d567426657">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Coleção de Objetos Java Spring Boot Thymeleaf"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="idade" class="java.lang.Integer">
+		<description><![CDATA[idade]]></description>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<description><![CDATA[uf]]></description>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<description><![CDATA[cidade]]></description>
+	</field>
+	<field name="sexopessoa" class="java.lang.String">
+		<description><![CDATA[sexopessoa]]></description>
+	</field>
+	<field name="bairro" class="java.lang.String">
+		<description><![CDATA[bairro]]></description>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<description><![CDATA[nome]]></description>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<description><![CDATA[id]]></description>
+	</field>
+	<field name="sobrenome" class="java.lang.String">
+		<description><![CDATA[sobrenome]]></description>
+	</field>
+	<field name="telefones" class="java.util.List">
+		<description><![CDATA[telefones]]></description>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<description><![CDATA[cep]]></description>
+	</field>
+	<field name="rua" class="java.lang.String">
+		<description><![CDATA[rua]]></description>
+	</field>
+	<variable name="id1" resetType="Column" calculation="Count" class="java.lang.Integer">
+		<expression><![CDATA[$F{id}]]></expression>
+	</variable>
+	<variable name="id2" resetType="Column" calculation="First" class="java.lang.Long">
+		<expression><![CDATA[$F{id}]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="75" splitType="Stretch">
+		<element kind="staticText" uuid="ac60cc5a-9e0e-46f6-97da-b6235636e7e2" x="60" y="10" width="434" height="50" fontName="Arial Black" fontSize="30.0" hTextAlign="Center">
+			<text><![CDATA[Relatorio de Pessoas]]></text>
+		</element>
+	</title>
+	<columnHeader height="99">
+		<element kind="staticText" uuid="909425f0-90bd-4420-80aa-a5cc35476a2c" x="40" y="50" width="60" height="30">
+			<text><![CDATA[ID]]></text>
+		</element>
+		<element kind="staticText" uuid="7d0e72aa-0618-445f-8cd6-b712c4e640cb" x="100" y="50" width="260" height="30">
+			<text><![CDATA[NOME]]></text>
+		</element>
+		<element kind="staticText" uuid="17cd6b05-967a-442a-98a1-63d09f962970" x="360" y="50" width="100" height="30">
+			<text><![CDATA[CIDADE]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="55" splitType="Stretch">
+			<element kind="textField" uuid="54b219ae-69d6-4e6d-a56a-af199867626e" x="40" y="0" width="60" height="30">
+				<expression><![CDATA[$F{id}]]></expression>
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="072603d9-6b75-4e5b-98b4-4a0f2bdfaec2"/>
+			</element>
+			<element kind="textField" uuid="fad708a8-b70d-4554-99f7-19565fbd5adc" x="100" y="0" width="260" height="30">
+				<expression><![CDATA[$F{nome}]]></expression>
+			</element>
+			<element kind="textField" uuid="bd71195f-d231-4883-bb93-5b167c799497" x="360" y="0" width="100" height="30">
+				<expression><![CDATA[$F{cidade}]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="78">
+		<element kind="staticText" uuid="9870519b-9661-470c-9919-32fa1a51a107" x="0" y="0" width="100" height="20">
+			<text><![CDATA[TELEFONES]]></text>
+		</element>
+		<element kind="staticText" uuid="baa9f5a1-a359-4a4d-8f8c-9c38779226ee" x="100" y="2" width="100" height="18">
+			<text><![CDATA[IDADE]]></text>
+		</element>
+		<element kind="staticText" uuid="5be4ae4f-26b5-498a-8b45-6f639cf724af" x="200" y="0" width="160" height="20">
+			<text><![CDATA[ENDEREÇO]]></text>
+		</element>
+		<element kind="textField" uuid="df074380-74ef-4fea-8108-14b435df8ca5" x="200" y="20" width="80" height="20">
+			<expression><![CDATA[$F{bairro}]]></expression>
+		</element>
+		<element kind="textField" uuid="a6da370a-ae59-4c98-ac9e-8daac884dee6" x="260" y="20" width="100" height="20">
+			<expression><![CDATA[$F{rua}]]></expression>
+		</element>
+		<element kind="textField" uuid="e8e57e82-3fdd-43d2-873e-e48a31619939" x="200" y="40" width="100" height="20">
+			<expression><![CDATA[$F{cep}]]></expression>
+		</element>
+		<element kind="textField" uuid="a8ace00e-d3ad-42c1-b886-547433c4d27d" x="300" y="35" width="60" height="25">
+			<expression><![CDATA[$F{uf}]]></expression>
+		</element>
+		<element kind="textField" uuid="39f4d18f-0422-4483-bd34-f4368395101c" x="100" y="20" width="100" height="20">
+			<expression><![CDATA[$F{idade}]]></expression>
+		</element>
+		<element kind="textField" uuid="b009a0ad-ce84-48f2-b32d-33ef7ab9981c" x="0" y="20" width="100" height="20">
+			<expression><![CDATA[$F{telefones}]]></expression>
+		</element>
+		<element kind="textField" uuid="8d990d41-c6ce-4924-808a-4e70950fac41" x="360" y="20" width="100" height="20">
+			<expression><![CDATA[$F{sexopessoa}]]></expression>
+		</element>
+		<element kind="staticText" uuid="be19bcfa-4bff-4ab6-b0e9-2a2d7fb09d28" x="360" y="0" width="100" height="19">
+			<text><![CDATA[SEXO]]></text>
+		</element>
+	</columnFooter>
+</jasperReport>

@@ -1,9 +1,11 @@
 package projeto.Users.boot.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import projeto.Users.boot.model.Pessoa;
 import projeto.Users.boot.model.Telefone;
@@ -31,6 +38,9 @@ public class PessoaController {
 
     @Autowired
     private TelefoneRepository telefoneRepository;
+    
+    @Autowired
+    private ReportUtil reportUtil;
 
     @RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
     public ModelAndView inicio() {
@@ -145,23 +155,50 @@ public class PessoaController {
 
     @PostMapping("/pesquisarpessoa")
     public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
-    		@RequestParam("pesqsexo") String pesqsexo){
-    	
-    	List<Pessoa> pessoas = new ArrayList<Pessoa>();
-    	
-    	if (pesqsexo != null && pesqsexo.isEmpty()) {
-    		pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa, pesqsexo);
-    	}else {
-    		pessoas = pessoaRepository.findPessoaByName(nomepesquisa);
-    	}
-    		
-    	
+                                  @RequestParam("pesqsexo") String pesqsexo,
+                                  HttpSession session) {
+        List<Pessoa> pessoas = pesqsexo != null && !pesqsexo.isEmpty() 
+            ? pessoaRepository.findPessoaByNameSexo(nomepesquisa, pesqsexo)
+            : pessoaRepository.findPessoaByName(nomepesquisa);
+        
+        session.setAttribute("pessoasPesquisadas", pessoas);
         ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-        modelAndView.addObject("pessoas", pessoaRepository.findPessoaByNameSexo(nomepesquisa, pesqsexo));
+        modelAndView.addObject("pessoas", pessoas);
         modelAndView.addObject("pessoaobj", new Pessoa());
         return modelAndView;
     }
 
+    @GetMapping("/imprimirPDF")
+    @Transactional(readOnly = true)
+    public void imprimePDF(HttpSession session, HttpServletResponse response) throws Exception {
+        List<Pessoa> pessoas = (List<Pessoa>) session.getAttribute("pessoasPesquisadas");
+
+        if (pessoas == null) {
+            pessoas = new ArrayList<>();
+            for (Pessoa pessoa : pessoaRepository.findAll()) {
+                Hibernate.initialize(pessoa.getTelefones());
+                pessoas.add(pessoa);
+            }
+        } else {
+            List<Pessoa> refreshedPessoas = new ArrayList<>();
+            for (Pessoa pessoa : pessoas) {
+                Pessoa refreshedPessoa = pessoaRepository.findById(pessoa.getId()).orElse(pessoa);
+                Hibernate.initialize(refreshedPessoa.getTelefones());
+                refreshedPessoas.add(refreshedPessoa);
+            }
+            pessoas = refreshedPessoas;
+        }
+
+        byte[] pdf = reportUtil.gerarRelatorio(pessoas, "pessoa", session.getServletContext());
+        response.setContentLength(pdf.length);
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+        response.setHeader(headerKey, headerValue);
+        response.getOutputStream().write(pdf);
+    }
+
+    
     @GetMapping("/telefones/{idpessoa}")
     public ModelAndView telefone(@PathVariable("idpessoa") Long idpessoa) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
@@ -207,4 +244,11 @@ public class PessoaController {
         modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));
         return modelAndView;
     }
+    
+    
+    
+    
+    
+    
+    
 }

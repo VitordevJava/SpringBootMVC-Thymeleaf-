@@ -26,9 +26,11 @@
 	<field name="sobrenome" class="java.lang.String">
 		<description><![CDATA[sobrenome]]></description>
 	</field>
-	<field name="telefones" class="java.util.List">
-		<description><![CDATA[telefones]]></description>
-	</field>
+<field name="telefones" class="java.util.List"/>
+<textField>
+    <reportElement x="0" y="0" width="100" height="20"/>
+    <textFieldExpression><![CDATA[$F{telefones}]]></textFieldExpression>
+</textField>
 	<field name="cep" class="java.lang.String">
 		<description><![CDATA[cep]]></description>
 	</field>

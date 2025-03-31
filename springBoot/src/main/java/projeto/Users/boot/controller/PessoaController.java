@@ -27,8 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import projeto.Users.boot.model.Pessoa;
 import projeto.Users.boot.model.Telefone;
+import projeto.Users.boot.model.Usuario;
 import projeto.Users.boot.repository.PessoaRepository;
 import projeto.Users.boot.repository.TelefoneRepository;
+import projeto.Users.boot.repository.UsuarioRepository;
 
 @Controller
 public class PessoaController {
@@ -245,10 +247,6 @@ public class PessoaController {
         return modelAndView;
     }
     
-    
-    
-    
-    
-    
+ 
     
 }

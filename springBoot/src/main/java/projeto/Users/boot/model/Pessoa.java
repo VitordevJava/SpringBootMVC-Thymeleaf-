@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -65,6 +66,10 @@ public class Pessoa implements Serializable  {
 	
 	private String uf;
 	
+	@ManyToOne
+	private Profissao profissao;
+	
+	
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
@@ -73,6 +78,13 @@ public class Pessoa implements Serializable  {
 		this.telefones = telefones;
 	}
 
+	public void setProfissao(Profissao profissao) {
+		this.profissao = profissao;
+	}
+	
+	public Profissao getProfissao() {
+		return profissao;
+	}
 	public String getCep() {
 		return cep;
 	}

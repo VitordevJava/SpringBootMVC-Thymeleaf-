@@ -50,6 +50,13 @@
                     <label>Idade</label> 
                     <input placeholder="Informe a idade"name="idade" th:field="*{idade}">
                 </div>
+                
+                <div class="input field col s6">
+					<label for="profissao" class="active">Profissão</label> 
+					<select class="browser-default" th:field="*{profissao}" id="profissao">
+					<option th:each = "p : ${profissoes} " th:value="${p.id}" th:text="${p.nome}">
+					</select>
+				</div>
                 <div class="input field col s6">
                     <label>Cep</label> 
                     <input placeholder="Informe o CEP "name="cep" th:field="*{cep}" id="cep">

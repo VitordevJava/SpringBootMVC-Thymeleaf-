@@ -26,9 +26,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import projeto.Users.boot.model.Pessoa;
+import projeto.Users.boot.model.Profissao;
 import projeto.Users.boot.model.Telefone;
 import projeto.Users.boot.model.Usuario;
 import projeto.Users.boot.repository.PessoaRepository;
+import projeto.Users.boot.repository.ProfissaoRepository;
 import projeto.Users.boot.repository.TelefoneRepository;
 import projeto.Users.boot.repository.UsuarioRepository;
 
@@ -43,12 +45,16 @@ public class PessoaController {
     
     @Autowired
     private ReportUtil reportUtil;
+    
+    @Autowired
+    private ProfissaoRepository profissaoRepository;
 
     @RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
     public ModelAndView inicio() {
         ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
         modelAndView.addObject("pessoas", pessoaRepository.findAll());
         modelAndView.addObject("pessoaobj", new Pessoa());
+        modelAndView.addObject("profissoes", profissaoRepository.findAll());
         return modelAndView;
     }
 
@@ -135,6 +141,8 @@ public class PessoaController {
             ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
             modelAndView.addObject("pessoaobj", pessoa.get());
             modelAndView.addObject("pessoas", pessoaRepository.findAll());
+            modelAndView.addObject("profissoes", profissaoRepository.findAll());
+
             return modelAndView;
         } else {
             return new ModelAndView("redirect:/listapessoas");

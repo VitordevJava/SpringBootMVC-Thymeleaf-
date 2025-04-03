@@ -1,9 +1,10 @@
 package projeto.Users.boot.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
@@ -15,6 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +28,18 @@ public class Pessoa implements Serializable  {
 
 
 	private static final long serialVersionUID = 1L;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
+	
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+	
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
 	
 	@Enumerated(EnumType.STRING)
 	private Cargo cargo;

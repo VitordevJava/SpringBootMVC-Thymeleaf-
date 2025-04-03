@@ -8,6 +8,8 @@ import java.util.List;
 import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +26,18 @@ public class Pessoa implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
 	
+	
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
 	private String sexopessoa;
 	
 	public String getSexopessoa() {

@@ -57,29 +57,37 @@
 					<option th:each = "p : ${profissoes} " th:value="${p.id}" th:text="${p.nome}">
 					</select>
 				</div>
-                <div class="input field col s6">
-                    <label>Cep</label> 
-                    <input placeholder="Informe o CEP "name="cep" th:field="*{cep}" id="cep">
-                </div>
-                <div class="input field col s6">
-                    <label>Rua</label> 
-                    <input name="rua" th:field="*{rua}" id="rua">
-                </div>
-                <div class="input field col s6">
-                    <label>Bairro</label> 
-                    <input name="bairro" th:field="*{bairro}" id="bairro">
-                </div>
-                <div class="input field col s6">
-                    <label>Cidade</label> 
-                    <input name="cidade" th:field="*{cidade}" id="cidade">
-                </div>
-                <div class="input field col s6">
-                    <label>UF</label> 
-                    <input name="uf" th:field="*{uf}" id="uf">
-                </div>
-            </div>
 
-            <div class="col s12">
+					<div class="row">
+						<div class="input field col s12">
+							<label for="cargo" class="active">Cargo</label>
+							<select class="browser-default" th:field="*{cargo}" id="cargo">
+								<option th:each="c : ${T(projeto.Users.boot.model.Cargo).values()} " th:value="${c}" th:text="${c.nome}">
+							</select>
+						</div>
+
+
+						<div class="input field col s6">
+							<label>Cep</label> <input placeholder="Informe o CEP " name="cep"
+								th:field="*{cep}" id="cep">
+						</div>
+						<div class="input field col s6">
+							<label>Rua</label> <input name="rua" th:field="*{rua}" id="rua">
+						</div>
+						<div class="input field col s6">
+							<label>Bairro</label> <input name="bairro" th:field="*{bairro}"
+								id="bairro">
+						</div>
+						<div class="input field col s6">
+							<label>Cidade</label> <input name="cidade" th:field="*{cidade}"
+								id="cidade">
+						</div>
+						<div class="input field col s6">
+							<label>UF</label> <input name="uf" th:field="*{uf}" id="uf">
+						</div>
+					</div>
+
+					<div class="col s12">
                 <div class="row">
                     <div class="col s6">
                         <input class="waves-effect waves-light btn-large" type="submit" value="Salvar">
